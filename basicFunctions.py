@@ -14,9 +14,7 @@ def groupItems(*stack):
 
 
 def median(*items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     items = items.copy()
     Fi = 0
@@ -33,9 +31,7 @@ def median(*items):
 
 
 def quartile(Q, *items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     items = items.copy()
     Fi = 0
@@ -52,9 +48,7 @@ def quartile(Q, *items):
         
         
 def percentile(P, *items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     items = items.copy()
     Fi = 0
@@ -71,9 +65,7 @@ def percentile(P, *items):
         
         
 def average(*items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     X = 0
     count = 0
@@ -84,9 +76,7 @@ def average(*items):
 
 
 def variance(*items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     count = 0
     count2 = 0
@@ -97,9 +87,7 @@ def variance(*items):
 
 
 def varianceB(*items):
-    if len(items) > 1: items = groupItems(items)
-    elif type(items[0]) is list or type(items[0]) is tuple: items = groupItems(items[0])
-    else: items = items[0]
+    items = checkParams(items)
     
     count = 0
     count2 = 0
@@ -108,3 +96,10 @@ def varianceB(*items):
         count += ((item - mean)**2)*items[item]
         count2 += items[item]
     return count / count2
+
+
+def checkParams(stack):
+    if len(stack) > 1: stack = groupItems(stack)
+    elif type(stack[0]) is list or type(stack[0]) is tuple: stack = groupItems(stack[0])
+    else: stack = stack[0]
+    return stack
