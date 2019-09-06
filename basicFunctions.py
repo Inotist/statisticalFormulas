@@ -23,9 +23,9 @@ def median(*items):
         items[item] = Fi
         
     Fi /= 2
-    preItem = 0
+    preItem = None
     for item in items.keys():
-        if preItem != 0: return (item + preItem) / 2
+        if preItem != None: return (item + preItem) / 2
         if items[item] > Fi: return item
         elif items[item] == Fi: preItem = item
 
@@ -40,9 +40,9 @@ def quartile(Q, *items):
         items[item] = Fi
         
     Fi *= Q/4
-    preItem = 0
+    preItem = None
     for item in items.keys():
-        if preItem != 0: return (item + preItem) / 2
+        if preItem != None: return (item + preItem) / 2
         if items[item] > Fi: return item
         elif items[item] == Fi: preItem = item
         
@@ -57,9 +57,9 @@ def percentile(P, *items):
         items[item] = Fi
         
     Fi *= P/100
-    preItem = 0
+    preItem = None
     for item in items.keys():
-        if preItem != 0: return (item + preItem) / 2
+        if preItem != None: return (item + preItem) / 2
         if items[item] > Fi: return item
         elif items[item] == Fi: preItem = item
         
