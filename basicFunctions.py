@@ -1,71 +1,47 @@
+from groupParams import checkParams
 from math import sqrt
 
-def groupItems(*stack):
-    if type(stack[0]) is list or type(stack[0]) is tuple:
-        items = sorted([item for item in stack[0]])
-    else: items = sorted([item for item in stack])
-    dic = {}
-    for item in range(len(items)):
-        if item is 0: dic[items[item]] = 1
-        elif items[item] == items[item-1]: dic[items[item]] += 1
-        else: dic[items[item]] = 1
-        
-    return dic
+def givePositions(items):
+    Fi = 0
+    for item in sorted(items.keys()):
+        Fi += items[item]
+        items[item] = Fi
+    return items, Fi
+
+def getPosition(items, Fi):
+    preItem = None
+    for item in sorted(items.keys()):
+        if preItem != None: return (item + preItem) / 2
+        if items[item] > Fi: return item
+        elif items[item] == Fi: preItem = item
 
 
 def median(*items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     items = items.copy()
-    Fi = 0
-    for item in items.keys():
-        Fi += items[item]
-        items[item] = Fi
-        
-    Fi /= 2
-    preItem = None
-    for item in items.keys():
-        if preItem != None: return (item + preItem) / 2
-        if items[item] > Fi: return item
-        elif items[item] == Fi: preItem = item
+    items, Fi = givePositions(items)
+    return getPosition(items, Fi/2)
 
 
 def quartile(Q, *items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     items = items.copy()
-    Fi = 0
-    for item in items.keys():
-        Fi += items[item]
-        items[item] = Fi
-        
-    Fi *= Q/4
-    preItem = None
-    for item in items.keys():
-        if preItem != None: return (item + preItem) / 2
-        if items[item] > Fi: return item
-        elif items[item] == Fi: preItem = item
+    items, Fi = givePositions(items)
+    return getPosition(items, Q*Fi/4)
         
         
 def percentile(P, *items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     items = items.copy()
-    Fi = 0
-    for item in items.keys():
-        Fi += items[item]
-        items[item] = Fi
-        
-    Fi *= P/100
-    preItem = None
-    for item in items.keys():
-        if preItem != None: return (item + preItem) / 2
-        if items[item] > Fi: return item
-        elif items[item] == Fi: preItem = item
+    items, Fi = givePositions(items)
+    return getPosition(items, P*Fi/100)
         
         
 def average(*items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     X = 0
     count = 0
@@ -76,7 +52,7 @@ def average(*items):
 
 
 def variance(*items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     count = 0
     count2 = 0
@@ -87,7 +63,7 @@ def variance(*items):
 
 
 def varianceB(*items):
-    items = checkParams(items)
+    items = checkParams(items, 'single')
     
     count = 0
     count2 = 0
@@ -96,10 +72,3 @@ def varianceB(*items):
         count += ((item - mean)**2)*items[item]
         count2 += items[item]
     return count / count2
-
-
-def checkParams(stack):
-    if len(stack) > 1: stack = groupItems(stack)
-    elif type(stack[0]) is list or type(stack[0]) is tuple: stack = groupItems(stack[0])
-    else: stack = stack[0]
-    return stack
