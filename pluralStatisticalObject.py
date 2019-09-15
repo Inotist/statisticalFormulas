@@ -1,5 +1,4 @@
 from singleStatisticalObject import singleStatistic
-from math import sqrt
 
 class pluralStatistic:
     def __init__(self, *stack):
